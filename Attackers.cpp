@@ -30,5 +30,4 @@ void Attackers::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short 
     catch (...) {
         cout << "nothing here" << endl;
     }
-
 }

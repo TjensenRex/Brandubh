@@ -5,12 +5,10 @@
 #include "Pieces.h"
 
 
-string Pieces::GetName()
-{
+string Pieces::GetName() {
     return name;
 }
 
-void Pieces::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short x, bool &done)
-{
+void Pieces::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short x, bool &done) {
     cout << "no piece here to capture!" << endl;
 }

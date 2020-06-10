@@ -8,12 +8,9 @@ using namespace std;
 int main() {
     vector<vector<Pieces*>> board (7);
     bool done = false;
-    bool moved = false;
+    bool moved;
+    bool turnTracker = true;
     char input;
-
-    /*FIXME: pieces cannot move to right side or bottom of board without terminating the game. This seems to be caused by
-     * the CheckIfCaptured function call checking the names of Pieces beyond the board's edge. Figure out an elegant
-     * way to solve this.*/
 
     cout << "Welcome to this virtual version of Brandubh, in the Tafl family of games. This game is played with two teams:"
     << "\nAttackers, represented by an 'A' and Defenders, represented by a 'D'. The goal of the Defenders is to get their\n"
@@ -25,30 +22,38 @@ int main() {
 
     InitializeBoard(board);
 
-    while (!done)
-    {
+    while (!done) {
+        if (turnTracker) {
+            cout << "Attacker's turn." << endl;
+        }
+
+        else {
+            cout << "Defender's turn." << endl;
+        }
+
         cout << "Find the piece you would like to move. Will it be an "
                 "\n(a) horizontal or "
                 "\n(b) vertical \nmovement?" << endl;
         moved = false;
 
-        while (!moved)
-        {
+        while (!moved) {
+            //FIXME: make it so resetting a turn does not pass the turn to the next player
             cin >> input;
-            if (input == 'a')
-            {
-                MoveXAxis(board, done);
-                moved = true;
+            if (input == 'a') {
+                MoveXAxis(board, done, turnTracker);
+                //oved = true;
             }
-            else if (input == 'b')
-            {
-                MoveYAxis(board, done);
-                moved = true;
+
+            else if (input == 'b') {
+                MoveYAxis(board, done, turnTracker);
+                //moved = true;
             }
+
             else {
                 cout << "Invalid choice. Please type 'a' or 'b'." << endl;
             }
         }
+        turnTracker = !turnTracker;
     }
 
     return 0;

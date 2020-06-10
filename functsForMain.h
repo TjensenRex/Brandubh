@@ -16,8 +16,8 @@ using namespace std;
 
 void InitializeBoard(vector<vector <Pieces*>> &board);
 void DisplayBoard(vector<vector <Pieces*>> &board);
-void MoveXAxis(vector<vector <Pieces*>> &board, bool &done);
-void MoveYAxis(vector<vector <Pieces*>> &board, bool &done);
+void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker);
+void MoveYAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker);
 void CheckIfCaptured(vector<vector<Pieces *>> &board, short y, short x, bool &done);
 
 #endif //TAFL_FUNCTSFORMAIN_H

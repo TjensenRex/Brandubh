@@ -5,6 +5,7 @@
 #include "functsForMain.h"
 
 void InitializeBoard(vector<vector <Pieces*>> &board) {
+    //Like it says, this sets up the board at the beginning of the game.
     for (vector<Pieces*> &row : board) {
         row.resize(7);
         //row.assign(7, new Pieces()); <- I have no idea why this doesn't work for filling the board with Pieces.
@@ -64,17 +65,44 @@ void DisplayBoard(vector<vector <Pieces*>> &board) {
     cout << endl;
 }
 
-void MoveXAxis(vector<vector <Pieces*>> &board, bool &done) {
+void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
+    //function for movement along the x-axis
     short x;
     short x2;
     short y;
+    short i;
     bool moved = false;
+    bool ready = false;
     Pieces* temp;
 
-    cout << "Enter the coordinates of the piece you wish to move.\nX-value:" << endl;
-    cin >> x;
-    cout << "Y-value:" << endl;
-    cin >> y;
+    while (!ready) {
+        cout << "Enter the coordinates of the piece you wish to move.\nX-value:" << endl;
+        cin >> x;
+        cout << "Y-value:" << endl;
+        cin >> y;
+
+        if (turnTracker) {
+            if (board.at(y).at(x)->GetName() != " A ") {
+                cout << "Invalid piece. Please try again." << endl;
+                continue;
+            }
+
+            else {
+                ready = true;
+            }
+        }
+
+        else {
+            if ((board.at(y).at(x)->GetName() != " D ") && (board.at(y).at(x)->GetName() != " K ")) {
+                cout << "Invalid piece. Please try again." << endl;
+                continue;
+            }
+
+            else {
+                ready = true;
+            }
+        }
+    }
 
     cout << board.at(y).at(x)->GetName() << " selected. ";
 
@@ -83,12 +111,11 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done) {
         cin >> x2;
 
         if (x2 == 7) {
-            moved = true;
             return;
         }
-
+        //check if there's a piece in the way
         else if (x2 < x) {
-            for (short i = x2; i < x; ++i) {
+            for (i = x2; i < x; ++i) {
                 if (board.at(y).at(i)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice." << endl;
                     moved = false;
@@ -101,7 +128,7 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done) {
         }
 
         else if (x2 > x) {
-            for (short i = x + 1; i < (x2 + 1); ++i) {
+            for (i = x + 1; i < (x2 + 1); ++i) {
                 if (board.at(y).at(i)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice."<< endl;
                     moved = false;
@@ -123,17 +150,44 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done) {
     DisplayBoard(board);
 }
 
-void MoveYAxis(vector<vector<Pieces *>> &board, bool &done) {
+void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
+    //function for movement along the y-axis
     short x;
     short y;
     short y2;
+    short i;
     bool moved = false;
+    bool ready = false;
     Pieces* temp;
 
-    cout << "Enter the coordinates of the piece you wish to move.\nX-value: " << endl;
-    cin >> x;
-    cout << "Y-value: " << endl;
-    cin >> y;
+    while (!ready) {
+        cout << "Enter the coordinates of the piece you wish to move.\nX-value:" << endl;
+        cin >> x;
+        cout << "Y-value:" << endl;
+        cin >> y;
+
+        if (turnTracker) {
+            if (board.at(y).at(x)->GetName() != " A ") {
+                cout << "Invalid piece. Please try again." << endl;
+                continue;
+            }
+
+            else {
+                ready = true;
+            }
+        }
+
+        else {
+            if ((board.at(y).at(x)->GetName() != " D ") && (board.at(y).at(x)->GetName() != " K ")) {
+                cout << "Invalid piece. Please try again." << endl;
+                continue;
+            }
+
+            else {
+                ready = true;
+            }
+        }
+    }
 
     cout << board.at(y).at(x)->GetName() << " selected. ";
 
@@ -142,12 +196,11 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done) {
         cin >> y2;
 
         if (y2 == 7) {
-            moved = true;
             return;
         }
-
+        //check if there's a piece in the way
         else if (y2 < y) {
-            for (short i = y2; i < y; ++i) {
+            for (i = y2; i < y; ++i) {
                 if (board.at(i).at(x)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice." << endl;
                     moved = false;
@@ -160,7 +213,7 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done) {
         }
 
         else if (y2 > y) {
-            for (short i = y + 1; i < (y2 + 1); ++i) {
+            for (i = y + 1; i < (y2 + 1); ++i) {
                 if (board.at(i).at(x)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice."<< endl;
                     moved = false;
@@ -183,6 +236,7 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done) {
 }
 
 void CheckIfCaptured(vector<vector<Pieces *>> &board, short y, short x, bool &done) {
+    //after movement, checks if any of the surrounding pieces have been captured.
     short i;
 
     for (i = x - 1; i <= (x + 1); ++i) {
@@ -195,7 +249,7 @@ void CheckIfCaptured(vector<vector<Pieces *>> &board, short y, short x, bool &do
         }
     }
 
-    for (i = y - 1; i < (y + 2); ++i) {
+    for (i = y - 1; i <= (y + 1); ++i) {
         if ((i < 0) || (i > 6)) {
             continue;
         }
