@@ -17,7 +17,7 @@ void Defenders::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short 
         }
     }
     catch (...) {
-        cout << "nothing here." << endl;
+        //DEBUG: cout << "nothing here." << endl;
     }
 
     try {
@@ -28,6 +28,6 @@ void Defenders::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short 
         }
     }
     catch (...) {
-        cout << "nothing here" << endl;
+        //DEBUG: cout << "nothing here" << endl;
     }
 }
