@@ -37,16 +37,15 @@ int main() {
         moved = false;
 
         while (!moved) {
-            //FIXME: make it so resetting a turn does not pass the turn to the next player
             cin >> input;
             if (input == 'a') {
                 MoveXAxis(board, done, turnTracker);
-                //oved = true;
+                moved = true;
             }
 
             else if (input == 'b') {
                 MoveYAxis(board, done, turnTracker);
-                //moved = true;
+                moved = true;
             }
 
             else {

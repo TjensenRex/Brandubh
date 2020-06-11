@@ -86,10 +86,6 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
                 cout << "Invalid piece. Please try again." << endl;
                 continue;
             }
-
-            else {
-                ready = true;
-            }
         }
 
         else {
@@ -97,24 +93,19 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
                 cout << "Invalid piece. Please try again." << endl;
                 continue;
             }
-
-            else {
-                ready = true;
-            }
         }
-    }
 
-    cout << board.at(y).at(x)->GetName() << " selected. ";
+        cout << board.at(y).at(x)->GetName() << " selected. " << endl;
 
-    while (!moved) {
-        cout << "Enter the X-value this piece is moving to:" << endl;
+        cout << "Enter the X-value this piece is moving to, or type '7' to reset your turn:" << endl;
         cin >> x2;
 
-        if (x2 == 7) {
-            return;
-        }
+        ready = (x2 != 7);
+    }
+
+    while (!moved) {
         //check if there's a piece in the way
-        else if (x2 < x) {
+        if (x2 < x) {
             for (i = x2; i < x; ++i) {
                 if (board.at(y).at(i)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice." << endl;
@@ -171,10 +162,6 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
                 cout << "Invalid piece. Please try again." << endl;
                 continue;
             }
-
-            else {
-                ready = true;
-            }
         }
 
         else {
@@ -182,24 +169,19 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
                 cout << "Invalid piece. Please try again." << endl;
                 continue;
             }
-
-            else {
-                ready = true;
-            }
         }
-    }
 
-    cout << board.at(y).at(x)->GetName() << " selected. ";
+        cout << board.at(y).at(x)->GetName() << " selected. " << endl;
 
-    while (!moved) {
-        cout << "Enter the Y-value this piece is moving to:" << endl;
+        cout << "Enter the Y-value this piece is moving to, or type '7' to reset your turn:" << endl;
         cin >> y2;
 
-        if (y2 == 7) {
-            return;
-        }
+        ready = (y2 != 7);
+    }
+
+    while (!moved) {
         //check if there's a piece in the way
-        else if (y2 < y) {
+        if (y2 < y) {
             for (i = y2; i < y; ++i) {
                 if (board.at(i).at(x)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice." << endl;
