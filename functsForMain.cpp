@@ -138,6 +138,10 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
     board.at(y).at(x2) = board.at(y).at(x);
     board.at(y).at(x) = temp;
 
+    //is this part needed?
+    temp = nullptr;
+    delete temp;
+
     CheckIfCaptured(board, y, x2, done);
 
     DisplayBoard(board);
@@ -215,6 +219,10 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
     temp = board.at(y2).at(x);
     board.at(y2).at(x) = board.at(y).at(x);
     board.at(y).at(x) = temp;
+
+    //is this part needed?
+    temp = nullptr;
+    delete temp;
 
     CheckIfCaptured(board, y2, x, done);
 

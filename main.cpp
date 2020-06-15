@@ -55,5 +55,11 @@ int main() {
         turnTracker = !turnTracker;
     }
 
+    for (vector<Pieces*> row : board) {
+        for (Pieces* piece : row) {
+            delete piece;
+        }
+    }
+
     return 0;
 }
