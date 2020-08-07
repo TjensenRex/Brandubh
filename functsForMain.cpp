@@ -16,6 +16,7 @@ void InitializeBoard(vector<vector <Pieces*>> &board) {
         }
     }
 
+    //for accessing specific elements, first .at is the y axis and second .at is the x axis
     //Defenders first
     delete board[3][2];
     board[3][2] = new Defenders();
@@ -50,7 +51,6 @@ void InitializeBoard(vector<vector <Pieces*>> &board) {
 }
 
 void DisplayBoard(vector<vector <Pieces*>> &board) {
-    //for accessing specific elements, first .at is the y axis and second .at is the x axis
     short yAxis = 0;
     //display coordinate key above the board
     cout << "  0  1  2  3  4  5  6 " << endl;
@@ -63,7 +63,7 @@ void DisplayBoard(vector<vector <Pieces*>> &board) {
         cout << yAxis << endl;
         yAxis += 1;
     }
-
+    //display coordinate key below the board
     cout << "  0  1  2  3  4  5  6 " << endl;
     cout << endl;
 }
@@ -74,7 +74,7 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
     short x2;
     short y;
     short i;
-    bool moved = false;         //the ready boolean tells the game to pass the turn to the next player
+    //the ready boolean tells the game to pass the turn to the next player
     bool ready = false;
     Pieces* temp;
 
@@ -111,13 +111,7 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
                 if (board.at(y).at(i)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice." << endl;
                     cin >> x2;
-
-                    moved = false;
                     break;
-                }
-
-                else {
-                    moved = true;
                 }
             }
         }
@@ -127,12 +121,7 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
                 if (board.at(y).at(i)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice."<< endl;
                     cin >> x2;
-
-                    moved = false;
                     break;
-                }
-                else {
-                    moved = true;
                 }
             }
         }
@@ -160,7 +149,6 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
     short y;
     short y2;
     short i;
-    bool moved = false;
     bool ready = false;
     Pieces* temp;
 
@@ -197,12 +185,7 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
                 if (board.at(i).at(x)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice." << endl;
                     cin >> y2;
-
-                    moved = false;
                     break;
-                }
-                else {
-                    moved = true;
                 }
             }
         }
@@ -213,11 +196,7 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
                     cout << "You cannot move through another piece. Please make another choice."<< endl;
                     cin >> y2;
 
-                    moved = false;
                     break;
-                }
-                else {
-                    moved = true;
                 }
             }
         }

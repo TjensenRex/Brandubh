@@ -22,7 +22,7 @@ void Defenders::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short 
     }
 
     try {
-        //checking if an enemy piece is on either side of this one
+        //checking if an enemy piece is on both sides of this one
         if ((board.at(y).at(x + 1)->GetName() == " A ") && (board.at(y).at(x - 1)->GetName() == " A ")) {
             cout << "Defender at position " << x << ", " << y << " captured." << endl;
             delete board.at(y).at(x);
