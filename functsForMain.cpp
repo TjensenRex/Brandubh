@@ -52,7 +52,9 @@ void InitializeBoard(vector<vector <Pieces*>> &board) {
 void DisplayBoard(vector<vector <Pieces*>> &board) {
     //for accessing specific elements, first .at is the y axis and second .at is the x axis
     short yAxis = 0;
+    //display coordinate key above the board
     cout << "  0  1  2  3  4  5  6 " << endl;
+    //this loop puts a coordinate key on either side of the board
     for (vector<Pieces*> &row : board) {
         cout << yAxis;
         for (Pieces* &piece : row) {
@@ -61,6 +63,7 @@ void DisplayBoard(vector<vector <Pieces*>> &board) {
         cout << yAxis << endl;
         yAxis += 1;
     }
+
     cout << "  0  1  2  3  4  5  6 " << endl;
     cout << endl;
 }
@@ -71,15 +74,17 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
     short x2;
     short y;
     short i;
-    bool moved = false;
+    bool moved = false;         //the ready boolean tells the game to pass the turn to the next player
     bool ready = false;
     Pieces* temp;
 
     while (!ready) {
         cout << "Enter the coordinates of the piece you wish to move.\nX-value:" << endl;
         cin >> x;
+        if (x >= 7 || x < 0) continue;
         cout << "Y-value:" << endl;
         cin >> y;
+        if (y >= 7 || y < 0) continue;
 
         if (turnTracker) {
             if (board.at(y).at(x)->GetName() != " A ") {
@@ -110,13 +115,14 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
                     moved = false;
                     break;
                 }
+
                 else {
                     moved = true;
                 }
             }
         }
 
-        else if (x2 > x) {
+        else if (x2 < 7) {
             for (i = x + 1; i < (x2 + 1); ++i) {
                 if (board.at(y).at(i)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice."<< endl;
@@ -130,15 +136,14 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
                 }
             }
         }
-
-        ready = (x2 != 7);
+        ready = (x2 != 7);      //if the user entered 7, restart the process without passing the turn
     }
 
     temp = board.at(y).at(x2);
     board.at(y).at(x2) = board.at(y).at(x);
     board.at(y).at(x) = temp;
 
-    //is this part needed?
+    //is this part needed since temp will soon move out of scope?
     temp = nullptr;
     delete temp;
 
@@ -148,7 +153,9 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
 }
 
 void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
-    //function for movement along the y-axis
+    /*function for movement along the y-axis. This is pretty much the same as MoveXAxis, but vertical. I split these
+     * into two separate functions because I figured it would be easier computing-wise to have to worry about only one
+     * axis of movement instead of two.*/
     short x;
     short y;
     short y2;
@@ -160,8 +167,10 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
     while (!ready) {
         cout << "Enter the coordinates of the piece you wish to move.\nX-value:" << endl;
         cin >> x;
+        if (x >= 7 || x < 0) continue;
         cout << "Y-value:" << endl;
         cin >> y;
+        if (y >= 7 || y < 0) continue;
 
         if (turnTracker) {
             if (board.at(y).at(x)->GetName() != " A ") {
@@ -198,7 +207,7 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
             }
         }
 
-        else if (y2 > y) {
+        else if (y2 < 7) {
             for (i = y + 1; i < (y2 + 1); ++i) {
                 if (board.at(i).at(x)->GetName() != " - ") {
                     cout << "You cannot move through another piece. Please make another choice."<< endl;
@@ -212,7 +221,7 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
                 }
             }
         }
-
+        //remember that if a person inputs 7, their turn restarts
         ready = (y2 != 7);
     }
 
@@ -232,17 +241,17 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
 void CheckIfCaptured(vector<vector<Pieces *>> &board, short y, short x, bool &done) {
     //after movement, checks if any of the surrounding pieces have been captured.
     short i;
-
+    //checks for capture along the x-axis of the moved piece, being careful to ignore numbers beyond board's indices.
     for (i = x - 1; i <= (x + 1); ++i) {
         if ((i < 0) || (i > 6)) {
             continue;
         }
 
-        else {
+        else {      //This is not a recursive call, it invokes the member function of the same name.
             board.at(y).at(i)->CheckIfCaptured(board, y, i, done);
         }
     }
-
+    //check for capture along the piece's y-axis.
     for (i = y - 1; i <= (y + 1); ++i) {
         if ((i < 0) || (i > 6)) {
             continue;

@@ -10,6 +10,7 @@ Attackers::Attackers() {
 
 void Attackers::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short x, bool &done) {
     try {
+        //checking if an enemy piece is above and below this piece
         if ((board.at(y + 1).at(x)->GetName() == " D ") && (board.at(y - 1).at(x)->GetName() == " D ")) {
             cout << "Attacker at position " << x << ", " << y << " captured." << endl;
             delete board.at(y).at(x);
@@ -21,6 +22,7 @@ void Attackers::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short 
     }
 
     try {
+        //checking if an enemy piece is on either side of this piece
         if ((board.at(y).at(x + 1)->GetName() == " D ") && (board.at(y).at(x - 1)->GetName() == " D ")) {
             cout << "Attacker at position " << x << ", " << y << " captured." << endl;
             delete board.at(y).at(x);

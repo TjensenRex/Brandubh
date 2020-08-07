@@ -33,7 +33,8 @@ int main() {
 
         cout << "Find the piece you would like to move. Will it be an "
                 "\n(a) horizontal or "
-                "\n(b) vertical \nmovement?" << endl;
+                "\n(b) vertical "
+                "\nmovement?" << endl;
         moved = false;
 
         while (!moved) {
@@ -55,7 +56,7 @@ int main() {
         turnTracker = !turnTracker;
     }
 
-    for (vector<Pieces*> row : board) {
+    for (const vector<Pieces*>& row : board) {
         for (Pieces* piece : row) {
             delete piece;
         }
