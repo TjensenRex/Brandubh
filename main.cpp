@@ -31,10 +31,10 @@ int main() {
             cout << "Defender's turn." << endl;
         }
 
-        cout << "Find the piece you would like to move. Will it be an "
-                "\n(a) horizontal or "
-                "\n(b) vertical "
-                "\nmovement?" << endl;
+        cout << "Find the piece you would like to move. Will it be an \n"
+                "(a) horizontal or \n"
+                "(b) vertical \n"
+                "movement?" << endl;
         moved = false;
 
         while (!moved) {

@@ -9,6 +9,9 @@ string Pieces::GetName() {
     return name;
 }
 
+/**
+* Defined, but does nothing.
+*/
 void Pieces::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short x, bool &done) {
     //DEBUG: cout << "no piece here to capture!" << endl;
 }

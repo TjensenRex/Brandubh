@@ -4,6 +4,10 @@
 
 #include "functsForMain.h"
 
+/**
+* Creates the board to start the game.
+* @param board a 2-D vector of Pieces pointers to represent the board
+*/
 void InitializeBoard(vector<vector <Pieces*>> &board) {
     //Like it says, this sets up the board at the beginning of the game.
     for (vector<Pieces*> &row : board) {
@@ -50,6 +54,10 @@ void InitializeBoard(vector<vector <Pieces*>> &board) {
     DisplayBoard(board);
 }
 
+/**
+* Displays the board to cout.
+* @param board the board to display.
+*/
 void DisplayBoard(vector<vector <Pieces*>> &board) {
     short yAxis = 0;
     //display coordinate key above the board
@@ -68,8 +76,14 @@ void DisplayBoard(vector<vector <Pieces*>> &board) {
     cout << endl;
 }
 
-void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
-    //function for movement along the x-axis
+/**
+* Function for movement along the x-axis.
+* @param board a reference to the board.
+* @param done tracks whether the game is finished
+* @param isAttacker indicates which player's turn it is. true = Attacker's turn, false = Defender's turn
+*/
+void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &isAttacker) {
+    
     short x;
     short x2;
     short y;
@@ -81,18 +95,17 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
     while (!ready) {
         cout << "Enter the coordinates of the piece you wish to move.\nX-value:" << endl;
         cin >> x;
-        if (x >= 7 || x < 0) continue;
+        if (x >= 7 || x < 0) continue; //restarts the loop
         cout << "Y-value:" << endl;
         cin >> y;
-        if (y >= 7 || y < 0) continue;
+        if (y >= 7 || y < 0) continue; //restarts the loop
 
-        if (turnTracker) {
+        if (isAttacker) {
             if (board.at(y).at(x)->GetName() != " A ") {
                 cout << "Invalid piece. Please try again." << endl;
                 continue;
             }
         }
-
         else {
             if ((board.at(y).at(x)->GetName() != " D ") && (board.at(y).at(x)->GetName() != " K ")) {
                 cout << "Invalid piece. Please try again." << endl;
@@ -105,7 +118,7 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
         cout << "Enter the X-value this piece is moving to, or type '7' to reset your turn:" << endl;
         cin >> x2;
 
-        //check if there's a piece in the way
+        //The next two loops check if there's a piece in the way
         if (x2 < x) {
             for (i = x2; i < x; ++i) {
                 if (board.at(y).at(i)->GetName() != " - ") {
@@ -141,10 +154,14 @@ void MoveXAxis(vector<vector <Pieces*>> &board, bool &done, bool &turnTracker) {
     DisplayBoard(board);
 }
 
-void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
-    /*function for movement along the y-axis. This is pretty much the same as MoveXAxis, but vertical. I split these
-     * into two separate functions because I figured it would be easier computing-wise to have to worry about only one
-     * axis of movement instead of two.*/
+/**
+* Function for movement along the y-axis.
+* @param board a reference to the board.
+* @param done tracks whether the game is finished
+* @param turnTracker indicates which player's turn it is. true = Attacker's turn, false = Defender's turn
+*/
+void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &isAttacker) {
+    
     short x;
     short y;
     short y2;
@@ -155,18 +172,17 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
     while (!ready) {
         cout << "Enter the coordinates of the piece you wish to move.\nX-value:" << endl;
         cin >> x;
-        if (x >= 7 || x < 0) continue;
+        if (x >= 7 || x < 0) continue; //restarts the loop
         cout << "Y-value:" << endl;
         cin >> y;
-        if (y >= 7 || y < 0) continue;
+        if (y >= 7 || y < 0) continue; //restarts the loop
 
-        if (turnTracker) {
+        if (isAttacker) {
             if (board.at(y).at(x)->GetName() != " A ") {
                 cout << "Invalid piece. Please try again." << endl;
                 continue;
             }
         }
-
         else {
             if ((board.at(y).at(x)->GetName() != " D ") && (board.at(y).at(x)->GetName() != " K ")) {
                 cout << "Invalid piece. Please try again." << endl;
@@ -217,6 +233,13 @@ void MoveYAxis(vector<vector<Pieces *>> &board, bool &done, bool &turnTracker) {
     DisplayBoard(board);
 }
 
+/**
+* Checks if pieces around the moved piece have been captured.
+* @param board reference to the board object.
+* @param y the y-coordinate of the moved piece.
+* @param x the x-coordinate of the moved piece.
+* @param done a boolean to check if the game is done.
+*/
 void CheckIfCaptured(vector<vector<Pieces *>> &board, short y, short x, bool &done) {
     //after movement, checks if any of the surrounding pieces have been captured.
     short i;

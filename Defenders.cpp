@@ -8,6 +8,13 @@ Defenders::Defenders() {
     name = " D ";
 }
 
+/**
+* overloaded CheckIfCaptured function for Defenders.
+* @param board reference to the board object.
+* @param y the piece's y-coordinate.
+* @param x the piece's x-coordinate.
+* @param done indicates whether the game is done.
+*/
 void Defenders::CheckIfCaptured(vector<vector <Pieces*>> &board, short y, short x, bool &done) {
     try {
         //checking if an enemy piece is above and below this one
